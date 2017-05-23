@@ -1,7 +1,7 @@
 module.exports = [
   {
     id: 1,
-    userId: 0,
+    userid: 1,
     gnickname: "游戏昵称1",
     content: "游戏信息1",
     tbdd: "",
@@ -10,7 +10,7 @@ module.exports = [
   },
   {
     id: 2,
-    userId: 0,
+    userid: 2,
     gnickname: "游戏昵称2",
     content: "游戏信息2",
     tbdd: "",
@@ -19,7 +19,7 @@ module.exports = [
   },
   {
     id: 3,
-    userId: 0,
+    userid: 3,
     gnickname: "游戏昵称3",
     content: "游戏信息3",
     tbdd: "",
