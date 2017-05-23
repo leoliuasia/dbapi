@@ -9,7 +9,8 @@ exports.single_user = (id, callback) => {
     lastip: user[0].lastip,
     regtime: user[0].regtime,
     lasttime: user[0].lasttime,
-    status: user[0].status
+    status: user[0].status,
+    usname: user[0].usname
   });
   else callback({error: `user id ${id} not found!`});
 };
@@ -36,7 +37,8 @@ exports.all_users = (pageIndex, pageCount, callback) => {
       lastip: user.lastip,
       regtime: user.regtime,
       lasttime: user.lasttime,
-      status: user.status
+      status: user.status,
+      usname: user.usname
     });
   });
 
