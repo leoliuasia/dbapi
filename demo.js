@@ -1,24 +1,24 @@
 var db = require('./dbapi'); // 后台数据库相关api
 
 // 添加管理员
-// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。id为用户id
-db.users.addAdmin('admin2', '昵称2', 'e10adc3949ba59abbe56e057f20f883e', (err, id)=> {
+// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+db.users.addAdmin('admin2', '昵称2', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
   if (err) { console.log(err.error); return; };
-  console.log(`======= add Admin success. id = ${id}`);
+  console.log(`======= add Admin success. user = `, user);
 });
 
 // 添加团长
-// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。id为用户id
-db.users.addTZ('tz2', '团长2', 'e10adc3949ba59abbe56e057f20f883e', (err, id)=> {
+// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+db.users.addTZ('tz2', '团长2', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
   if (err) { console.log(err.error); return; };
-  console.log(`======= add 团长 success. id = ${id}`);
+  console.log(`======= add 团长 success. user = `, user);
 });
 
 // 添加团员
-// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。id为用户id
-db.users.addTY('ty2', '团员3', 'e10adc3949ba59abbe56e057f20f883e', (err, id)=> {
+// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+db.users.addTY('ty2', '团员3', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
   if (err) { console.log(err.error); return; };
-  console.log(`======= add 团员 success. id = ${id}`);
+  console.log(`======= add 团员 success. user = `, user);
 });
 
 // 查询所有用户
@@ -68,7 +68,7 @@ db.users.changeUserStatus(3, 0, (err) => {
 // 登录时检查是否可以登录
 // 1：usname, 2：密码（前端输入的密码加密后的md5串，小写
 // 3：回调 ，err不空时表示错误，空时user为相应的用户信息
-db.users.checkUserPwd('admin', 'e10adc3949ba59abbe56e057f20f883e1', (err, user) => {
+db.users.checkUserPwd('admin', 'e10adc3949ba59abbe56e057f20f883e', (err, user) => {
   if (err) { console.log(err); return; }
   console.log(`admin valid!user:`, user);
 });
