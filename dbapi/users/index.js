@@ -6,7 +6,16 @@ exports.checkUserPwd = (usname, password, callback) => {
   });
 
   if (user != null && user.length == 1) {
-    callback(null);
+    callback(null, {
+      id: user[0].id,
+      nickname: user[0].nickname,
+      role: user[0].role,
+      lastip: user[0].lastip,
+      regtime: user[0].regtime,
+      lasttime: user[0].lasttime,
+      status: user[0].status,
+      usname: user[0].usname
+    });
   } else {
     callback({error: `${usname} not valid`});
   }
@@ -76,9 +85,11 @@ function addUser(user, callback)
   var d = new Date();
   user.regtime = d.toLocaleString();
   user.lasttime = d.toLocaleString();
+  user.lastip = "";
+  user.status = 0;
   users.push(user);
 
-  callback(null);
+  callback(null, user.id);
 }
 
 exports.addAdmin = (usname, nickname, pwd, callback) => {
@@ -86,9 +97,7 @@ exports.addAdmin = (usname, nickname, pwd, callback) => {
       usname: usname,
       pwd: pwd,
       nickname: nickname,
-      role: 1,
-      lastip: "127.0.0.1",
-      status: 0
+      role: 1
   }, callback);
 };
 
@@ -99,9 +108,7 @@ exports.addTZ = (usname, nickname, pwd, callback) => {
       usname: usname,
       pwd: pwd,
       nickname: nickname,
-      role: 2,
-      lastip: "127.0.0.1",
-      status: 0
+      role: 2
   }, callback);
 };
 
@@ -112,9 +119,7 @@ exports.addTY = (usname, nickname, pwd, callback) => {
       usname: usname,
       pwd: pwd,
       nickname: nickname,
-      role: 3,
-      lastip: "127.0.0.1",
-      status: 0
+      role: 3
   }, callback);
 };
 
