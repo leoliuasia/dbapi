@@ -146,7 +146,7 @@ exports.updateUser = (id, nickname, pwd, callback) => {
   if (index > -1)
   {
     users[index].nickname = nickname;
-    if (pwd != null || pwd != '')
+    if (pwd != null && pwd != '')
       users[index].pwd = pwd;
   }
 

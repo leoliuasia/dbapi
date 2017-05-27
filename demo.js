@@ -36,10 +36,10 @@ db.users.addTY('ty2', '团员3', 'e10adc3949ba59abbe56e057f20f883e', (err, user)
 
 // 修改用户
 // 1：用户id，2：昵称，3：密码（为null不修改），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.updateUser(4, '昵称3', null, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('======= edit success');
-// });
+db.users.updateUser(4, '昵称3', null, (err) => {
+  if (err) { console.log(err.error); return; };
+  console.log('======= edit success');
+});
 
 // db.users.all_users(1, 20, 0, (err, users) => {
 //   if (err) { console.log(err.error); return; };
