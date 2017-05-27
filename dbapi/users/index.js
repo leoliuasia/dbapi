@@ -195,3 +195,15 @@ exports.updateUserLastIp = (id, newip, callback) => {
 
   callback(error);
 };
+
+exports.updateUserLastTime = (id, callback) => {
+  var error = { error: "not found" };
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id == id) {
+      users[i].lasttime = new Date().toLocaleString();
+      error = null;
+      break;
+    }
+  }
+  callback(error);
+};

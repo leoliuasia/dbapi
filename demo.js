@@ -82,6 +82,14 @@ db.users.updateUserLastIp(1, "1.1.1.2", (err) => {
   console.log("update last ip success!");
 });
 
+// 更新用户上次登录时间
+// 1. userid
+// 2. 回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+db.users.updateUserLastTime(1, (err) => {
+  if (err) { console.log(err); return; }
+  console.log("update last time success!");
+});
+
 // 查询所有用户
 db.users.all_users(1, 10, 0, (err, users) => {
   if (err) { console.log(err.error); return; };
