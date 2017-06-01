@@ -1,100 +1,120 @@
 var db = require('./dbapi'); // 后台数据库相关api
 
-// 添加管理员
-// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.addAdmin('admin2', '昵称2', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
-//   if (err) { console.log(err.error); return; };
-//   console.log(`======= add Admin success. user = `, user);
-// });
+db.useRethinkDb();
 
-// 添加团长
-// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.addTZ('tz2', '团长2', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
-//   if (err) { console.log(err.error); return; };
-//   console.log(`======= add 团长 success. user = `, user);
-// });
+setTimeout(()=> {
+  // 添加管理员
+  // 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.addAdmin('admin2', '昵称2', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
+  //   if (err) { console.log(err); return; };
+  //   console.log(`======= add Admin success. user = `, user);
+  // });
 
-// 添加团员
-// 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.addTY('ty2', '团员3', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
-//   if (err) { console.log(err.error); return; };
-//   console.log(`======= add 团员 success. user = `, user);
-// });
+  // 添加团长
+  // 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.addTZ('tz2', '团长2', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
+  //   if (err) { console.log(err); return; };
+  //   console.log(`======= add 团长 success. user = `, user);
+  // });
 
-// 查询所有用户
-// 1：页号，从1开始，2：每页记录条数，3：role，0所有，1管理员，2团长，3团员
-// 4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。users对应的用户信息
-// db.users.all_users(1, 2, 3, (err, users) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(users);
-// });
+  // 添加团员
+  // 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.addTY('ty2', '团员3', 'e10adc3949ba59abbe56e057f20f883e', (err, user)=> {
+  //   if (err) { console.log(err); return; };
+  //   console.log(`======= add 团员 success. user = `, user);
+  // });
 
-// db.users.single_user(1, (err, user) => {
-//   if (err) { console.log("single_user: " + err.error); return; };
-//   console.log(user);
-// });
+  // 登录时检查是否可以登录
+  // 1：usname, 2：密码（前端输入的密码加密后的md5串，小写
+  // 3：回调 ，err不空时表示错误，空时user为相应的用户信息
+  // db.users.checkUserPwd('admin2', 'e10adc3949ba59abbe56e057f20f883e', (err, user) => {
+  //   if (err) { console.log(err); return; }
+  //   console.log(`admin valid!user:`, user);
+  // });
 
-// 修改用户
-// 1：用户id，2：昵称，3：密码（为null不修改），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.updateUser(4, '昵称3', null, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('======= edit success');
-// });
+  // 返回单个用户信息
+  // 1. id: uuid
+  // 2. 回调，err: 不为空时表示有错误。为空user则为查找到的用户信息
+  // db.users.single_user('756f0c1d-769e-4b51-849f-b0a1e80e4bfe', (err, user) => {
+  //   if (err) { console.log("single_user: " + err.error); return; };
+  //   console.log(user);
+  // });
 
-// db.users.all_users(1, 20, 0, (err, users) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(users);
-// });
+  // 查询所有用户
+  // 1：页号，从1开始，2：每页记录条数，3：role，0所有，1管理员，2团长，3团员
+  // 4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。users对应的用户信息
+  // db.users.all_users(1, 2, 2, (err, users) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(users);
+  // });
 
-// 删除用户
-// 1：用户id，2：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.delUser(4, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('======= del success');
-// });
+  // 添加日志
+  // 1. type
+  // 2. doer
+  // 3. 内容
+  // 4. ip?
+  // db.logs.addlog(1, 1, "log 1", "122.21.23.11", (err) => {
+  //   if (err) { console.log(err); return; };
+  //
+  //   console.log("========= log added");
+  // });
+  //
+  // db.logs.addlog(2, 2, "log 2", "122.21.23.11", (err) => {
+  //   if (err) { console.log(err); return; };
+  //
+  //   console.log("========= log added");
+  // });
 
-// db.users.all_users(1, 20, 0, (err, users) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(users);
-// });
+  // 获取日志
+  // 1. 页号
+  // 2. 每页数量
+  // 3. 哪个用户的日志，0表示所有，其它表示按用户id过滤
+  // db.logs.getlogs(1, 10, 0, (err, logs) => {
+  //  if (err) { console.log(err); return; };
+  //
+  //   console.log(logs);
+  // });
 
-// 更新用户状态
-// 1：用户id，2：status值，3：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.changeUserStatus(3, 0, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(`======= changed`);
-// });
+  // 修改用户
+  // 1：用户id，2：昵称，3：密码（为null不修改），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.updateUser('6e681a22-b137-4afd-85b8-edadfe06a06f', '团员团员', 'e10adc3949ba59abbe56e057f20f883e', (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('======= edit success');
+  // });
 
-// 登录时检查是否可以登录
-// 1：usname, 2：密码（前端输入的密码加密后的md5串，小写
-// 3：回调 ，err不空时表示错误，空时user为相应的用户信息
-// db.users.checkUserPwd('admin', 'e10adc3949ba59abbe56e057f20f883e', (err, user) => {
-//   if (err) { console.log(err); return; }
-//   console.log(`admin valid!user:`, user);
-// });
+  // 删除用户
+  // 1：用户id，2：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.delUser('3460caad-3560-4ed8-903d-a61e62f530bc', (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('======= del success');
+  // });
 
-// 更新用户上次登录IP
-// 1. userid
-// 2. 新的IP
-// 3. 回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.updateUserLastIp(1, "1.1.1.2", (err) => {
-//   if (err) { console.log(err); return; }
-//   console.log("update last ip success!");
-// });
+  // 更新用户状态
+  // 1：用户id，2：status值，3：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.changeUserStatus('6e681a22-b137-4afd-85b8-edadfe06a06f', 2, (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(`======= changed`);
+  // });
 
-// 更新用户上次登录时间
-// 1. userid
-// 2. 回调，err如果成功为null，否则表示失败。属性error表示错误描述。
-// db.users.updateUserLastTime(1, (err) => {
-//   if (err) { console.log(err); return; }
-//   console.log("update last time success!");
-// });
+  // 更新用户上次登录IP
+  // 1. userid
+  // 2. 新的IP
+  // 3. 回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.updateUserLastIp('6e681a22-b137-4afd-85b8-edadfe06a06f', "1.1.1.3", (err) => {
+  //   if (err) { console.log(err); return; }
+  //   console.log("update last ip success!");
+  // });
 
-// 查询所有用户
-// db.users.all_users(1, 10, 0, (err, users) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(users);
-// });
+  // 更新用户上次登录时间
+  // 1. userid
+  // 2. 回调，err如果成功为null，否则表示失败。属性error表示错误描述。
+  // db.users.updateUserLastTime('6e681a22-b137-4afd-85b8-edadfe06a06f', (err) => {
+  //   if (err) { console.log(err); return; }
+  //   console.log("update last time success!");
+  // });
+
+}, 1000);
+
 
 // 查询所有游戏
 // 1.pageIndex
@@ -247,34 +267,3 @@ var db = require('./dbapi'); // 后台数据库相关api
 //   if (err) { console.log(err.error); return; };
 //   console.log(progresses);
 // });
-
-db.useRethinkDb();
-
-setTimeout(()=>{
-  // 添加日志
-  // 1. type
-  // 2. doer
-  // 3. 内容
-  // 4. ip?
-  // db.logs.addlog(1, 1, "log 1", "122.21.23.11", (err) => {
-  //   if (err) { console.log(err); return; };
-  //
-  //   console.log("========= log added");
-  // });
-  //
-  // db.logs.addlog(2, 2, "log 2", "122.21.23.11", (err) => {
-  //   if (err) { console.log(err); return; };
-  //
-  //   console.log("========= log added");
-  // });
-
-  // 获取日志
-  // 1. 页号
-  // 2. 每页数量
-  // 3. 哪个用户的日志，0表示所有，其它表示按用户id过滤
-  db.logs.getlogs(1, 2, 2, (err, logs) => {
-    if (err) { console.log(err); return; };
-
-    console.log(logs);
-  });
-}, 2000);

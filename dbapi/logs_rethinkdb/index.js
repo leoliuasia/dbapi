@@ -29,25 +29,34 @@ exports.getlogs = (pageIndex, pageCount, userid, callback) => {
   var q = rdb.r.table('logs').orderBy({index: rdb.r.desc('addtime')});
   if (userid > 0) q = q.filter({userid: userid});
 
-  var sliceStart = (pageIndex - 1) * pageCount;
-  q = q.slice(sliceStart, sliceStart + pageCount);
-
-  q.run(rdb.conn, (err, cursor)=>{
-    //console.log(err);
+  var qcount = q.count();
+  qcount.run(rdb.conn, (err, count) => {
     if (err) callback(err.msg);
     else {
-      cursor.toArray(function(err, result) {
-        if (err) callback(err.msg);
-        else {
-          var data = {
-            total: result.length,
-            pageIndex: pageIndex,
-            pageCount: pageCount
-          };
-          data.logs = result;
-          callback(null, data);
-        }
-      });
+      if (count == 0) {
+        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount});
+      } else {
+        var sliceStart = (pageIndex - 1) * pageCount;
+        q = q.slice(sliceStart, sliceStart + pageCount);
+
+        q.run(rdb.conn, (err, cursor)=>{
+          if (err) callback(err.msg);
+          else {
+            cursor.toArray(function(err, result) {
+              if (err) callback(err.msg);
+              else {
+                var data = {
+                  total: count,
+                  pageIndex: pageIndex,
+                  pageCount: pageCount
+                };
+                data.logs = result;
+                callback(null, data);
+              }
+            });
+          }
+        });
+      }
     }
   });
 };

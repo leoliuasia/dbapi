@@ -1,6 +1,7 @@
 var r = require('rethinkdb');
+var rconf = require('../config');
 
-r.connect({db: 'wow', host: 'localhost', port: 28015}, (err, conn) => {
+r.connect({db: rconf.db, host: rconf.host, port: rconf.port}, (err, conn) => {
 
   if (err != null) {
     throw err;
@@ -10,20 +11,20 @@ r.connect({db: 'wow', host: 'localhost', port: 28015}, (err, conn) => {
 
     r.dbList().run(conn, (err, dblist) => {
 
-      if (dblist.indexOf('wow') == -1) {
+      if (dblist.indexOf(rconf.db) == -1) {
         // create db.
-        r.dbCreate('wow').run(conn, (err, result) => {
+        r.dbCreate(rconf.db).run(conn, (err, result) => {
           if (err) throw err;
-          conn.use('wow');
+          conn.use(rconf.db);
         });
       }
 
-      r.db('wow').tableList().run(conn, (err, result)=>{
+      r.tableList().run(conn, (err, result)=>{
         // create tables
-        var tables = ['logs'];
+        var tables = ['logs', 'users'];
         tables.forEach((table)=> {
           if (result.indexOf(table) == -1) {
-            r.db('wow').tableCreate(table).run(conn, (err, result) => {
+            r.tableCreate(table).run(conn, (err, result) => {
               if (err) throw err;
             })
           }
@@ -31,18 +32,24 @@ r.connect({db: 'wow', host: 'localhost', port: 28015}, (err, conn) => {
       });
 
       // create indexes for logs
-      r.db('wow').table('logs').indexList().run(conn, (err, result) => {
-        var indexes = ['userid', 'addtime'];
-        indexes.forEach((index)=> {
-          if (result.indexOf(index) == -1) {
-            r.db('wow').table('logs').indexCreate(index).run(conn, (err, result)=>{
-              if (err) console.log(err);
-            });
-          }
-        });
-      });
+      createIndex('logs', ['userid', 'addtime']);
+      // create indexes for users
+      createIndex('users', ['role', 'usname']);
+
     });
   }
 });
+
+function createIndex(table, indexes) {
+  r.table(table).indexList().run(exports.conn, (err, result) => {
+    indexes.forEach((index)=> {
+      if (result.indexOf(index) == -1) {
+        r.table(table).indexCreate(index).run(exports.conn, (err, result)=>{
+          if (err) console.log(err);
+        });
+      }
+    });
+  });
+}
 
 exports.r = r;
