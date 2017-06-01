@@ -1,3 +1,6 @@
+// require('./dbapi')前，先在项目目录下执行 npm install rethinkdb , 安装rethnkdb的nodejs driver.
+// dbapi/config/index.js文件中指定rethinkdb的地址和端口.
+
 var db = require('./dbapi'); // 后台数据库相关api
 
 db.useRethinkDb(); // 默认内存数据库，使用这个切换成实际部署数据库。
