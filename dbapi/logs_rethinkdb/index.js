@@ -1,38 +1,48 @@
 
-var logs = [];
+var rdb = require('../rdb');
 
 exports.addlog = (type, userid, content, ip, callback) => {
-  var id = 1;
-  if (logs.length > 0) id = logs[logs.length - 1].id + 1;
 
-  logs.push({
-    id: id,
+  if (rdb.conn == null) {
+    callback("rdb.conn is null");
+    return;
+  }
+
+  rdb.r.table('logs').insert({
     type: type,
     userid: userid,
     content: content,
     ip: ip,
     addtime: new Date().toLocaleString()
+  }).run(rdb.conn, (err, result)=>{
+    if (err) callback(err.msg);
+    else callback(null);
   });
-  callback(null);
 };
 
 exports.getlogs = (pageIndex, pageCount, userid, callback) => {
-  var matchedLogs = null;
-    if (userid == 0) matchedLogs = logs;
-    else matchedLogs = logs.filter((log) => {
-      return log.userid == userid;
-    });
+    var q = rdb.r.table('logs').orderBy({index: rdb.r.desc('addtime')});
+    if (userid > 0) q = q.filter({userid: userid});
 
     var sliceStart = (pageIndex - 1) * pageCount;
-    var sliceEnd = sliceStart + pageCount;
+    q = q.slice(sliceStart, sliceStart + pageCount);
 
-    var data = {
-      total: matchedLogs.length,
-      pageIndex: pageIndex,
-      pageCount: pageCount
-    };
-
-    var logsSliced = matchedLogs.slice(sliceStart, sliceEnd);
-    data.logs = logsSliced;
-    callback(null, data);
+    q.run(rdb.conn, (err, cursor)=>{
+      //console.log(err);
+      if (err) callback(err.msg);
+      else {
+        cursor.toArray(function(err, result) {
+          if (err) callback(err.msg);
+          else {
+            var data = {
+              total: result.length,
+              pageIndex: pageIndex,
+              pageCount: pageCount
+            };
+            data.logs = result;
+            callback(null, data);
+          }
+        });
+      }
+    });
 };
