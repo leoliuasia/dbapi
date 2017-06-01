@@ -21,28 +21,33 @@ exports.addlog = (type, userid, content, ip, callback) => {
 };
 
 exports.getlogs = (pageIndex, pageCount, userid, callback) => {
-    var q = rdb.r.table('logs').orderBy({index: rdb.r.desc('addtime')});
-    if (userid > 0) q = q.filter({userid: userid});
+  if (rdb.conn == null) {
+    callback("rdb.conn is null");
+    return;
+  }
 
-    var sliceStart = (pageIndex - 1) * pageCount;
-    q = q.slice(sliceStart, sliceStart + pageCount);
+  var q = rdb.r.table('logs').orderBy({index: rdb.r.desc('addtime')});
+  if (userid > 0) q = q.filter({userid: userid});
 
-    q.run(rdb.conn, (err, cursor)=>{
-      //console.log(err);
-      if (err) callback(err.msg);
-      else {
-        cursor.toArray(function(err, result) {
-          if (err) callback(err.msg);
-          else {
-            var data = {
-              total: result.length,
-              pageIndex: pageIndex,
-              pageCount: pageCount
-            };
-            data.logs = result;
-            callback(null, data);
-          }
-        });
-      }
-    });
+  var sliceStart = (pageIndex - 1) * pageCount;
+  q = q.slice(sliceStart, sliceStart + pageCount);
+
+  q.run(rdb.conn, (err, cursor)=>{
+    //console.log(err);
+    if (err) callback(err.msg);
+    else {
+      cursor.toArray(function(err, result) {
+        if (err) callback(err.msg);
+        else {
+          var data = {
+            total: result.length,
+            pageIndex: pageIndex,
+            pageCount: pageCount
+          };
+          data.logs = result;
+          callback(null, data);
+        }
+      });
+    }
+  });
 };
