@@ -21,27 +21,32 @@ r.connect({db: rconf.db, host: rconf.host, port: rconf.port}, (err, conn) => {
 
       r.tableList().run(conn, (err, result)=>{
         // create tables
-        var tables = ['logs', 'users'];
+        var tables = ['logs', 'users', 'games', 'tasks', 'progresses'];
+        var indexes = {
+          'logs': ['userid', 'addtime'],
+          'users': ['role', 'usname'],
+          'games': ['userid'],
+          'tasks': ['gid'],
+          'progresses': ['taskid']
+        }
         tables.forEach((table)=> {
           if (result.indexOf(table) == -1) {
             r.tableCreate(table).run(conn, (err, result) => {
               if (err) throw err;
-            })
+              createIndex(table, indexes[table]);// create index.
+            });
+          } else {
+            createIndex(table, indexes[table]);// create index.
           }
         });
       });
-
-      // create indexes for logs
-      createIndex('logs', ['userid', 'addtime']);
-      // create indexes for users
-      createIndex('users', ['role', 'usname']);
-
     });
   }
 });
 
 function createIndex(table, indexes) {
   r.table(table).indexList().run(exports.conn, (err, result) => {
+    //console.log("index list:", result, ", err:", err);
     indexes.forEach((index)=> {
       if (result.indexOf(index) == -1) {
         r.table(table).indexCreate(index).run(exports.conn, (err, result)=>{

@@ -1,6 +1,6 @@
 var db = require('./dbapi'); // 后台数据库相关api
 
-db.useRethinkDb();
+db.useRethinkDb(); // 默认内存数据库，使用这个切换成实际部署数据库。
 
 setTimeout(()=> {
   // 添加管理员
@@ -36,7 +36,7 @@ setTimeout(()=> {
   // 1. id: uuid
   // 2. 回调，err: 不为空时表示有错误。为空user则为查找到的用户信息
   // db.users.single_user('756f0c1d-769e-4b51-849f-b0a1e80e4bfe', (err, user) => {
-  //   if (err) { console.log("single_user: " + err.error); return; };
+  //   if (err) { console.log("single_user: " + err); return; };
   //   console.log(user);
   // });
 
@@ -113,157 +113,120 @@ setTimeout(()=> {
   //   console.log("update last time success!");
   // });
 
+  // 添加一个游戏
+  // 1. userid
+  // 2. gnickname
+  // 3. content
+  // 4. 淘宝订单号
+  // db.games.addGame('70c46afc-88de-40de-b11c-f87bd72398e9', "游戏昵称6", "游戏信息6", "tbdd6", (err) => {
+  //   if (err) { console.log(err); return; }
+  //   console.log('======== added game.');
+  // });
+
+  // 查询所有游戏
+  // 1.pageIndex
+  // 2.pageCount
+  // 3.userid, 为''或null时不限制用户，返回所有，否则返回已经被分配到用户的游戏列表。
+  // db.games.all_games(1, 20, '70c46afc-88de-40de-b11c-f87bd72398e9', (err, games) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(games);
+  // });
+
+  // 修改游戏
+  // 1. id
+  // 2. userid,为null或者''时，表示不更改分配的用户。否则将更改分配到的用户。
+  // 3. gnickname
+  // 4. content
+  // 5. 淘宝订单号
+  // db.games.updateGame('481cc2f6-37d0-44bc-94ef-76786b040f13', '70c46afc-88de-40de-b11c-f87bd72398e9', "gnickname76786b040f13", "content76786b040f13", "tbdd76786b040f13", (err) => {
+  //   if (err) { console.log(err); return; }
+  //   console.log('======== updated game.');
+  // });
+
+  // 删除游戏
+  // 1. id
+  // db.games.delGame('481cc2f6-37d0-44bc-94ef-76786b040f13', (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log("======== deleted game.");
+  // });
+
+  // 更新游戏状态
+  // 1. id
+  // 2. status, 见需求文档
+  // db.games.updateGameStatus('14933ec2-4e5d-43a7-b253-ea71bae4fb1f', 2, (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log("======== updated game status.");
+  // });
+
+  // 添加游戏任务
+  // 1. gameid
+  // 2. 任务标题
+  // 3. 任务内容
+  // db.games.addtask('499bcb63-d54a-4e25-bb47-2708b94ea7ef', "3333333333", "333333333333333333", (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log("======= task added");
+  // });
+
+  // 获取任务
+  // 1. gameid
+  // 由于任务数记录条数不会很多，基本不用分页
+  // db.games.gettasks('499bcb63-d54a-4e25-bb47-2708b94ea7ef', (err, tasks) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(tasks);
+  // });
+
+  // 更新任务
+  // 1. 任务id
+  // 2. 任务标题
+  // 3. 任务内容
+  // db.games.updatetask('c00adefe-249f-422f-a6c4-95a644985560', "title", "content", (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('========= updated task');
+  // });
+
+  // 更新任务状态
+  // 1. 任务id
+  // 2. 新状态，见需求文档
+  // db.games.changeTaskStatus('c00adefe-249f-422f-a6c4-95a644985560', 2, (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('========= changeTaskStatus ok');
+  // });
+
+  // 删除任务
+  // 1.任务id
+  // db.games.deltask('c00adefe-249f-422f-a6c4-95a644985560', (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('==== deleted task');
+  // });
+
+  // 添加进度
+  // 1. taskid
+  // 2. content
+  // db.games.addprogress('14933ec2-4e5d-43a7-b253-ea71bae4fb1f', "progress content 2", (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log("======= progress added");
+  // });
+
+  // 获取进度
+  // 1. 任务id
+  // db.games.getprogresss('14933ec2-4e5d-43a7-b253-ea71bae4fb1f', (err, progresses) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(progresses);
+  // });
+
+  // 更新进度
+  // 1. 进度id
+  // 2. 进度内容
+  // db.games.updateprogresss('135bb902-5e33-44fd-88af-50d0fc7c78d7', "content 33333333", (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('========= updated progress');
+  // });
+
+  // 删除进度
+  // 1. 进度id
+  // db.games.delprogress('135bb902-5e33-44fd-88af-50d0fc7c78d7', (err) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log('==== deleted progress');
+  // });
+
 }, 1000);
-
-
-// 查询所有游戏
-// 1.pageIndex
-// 2.pageCount
-// 3.userid, 为0时不限制用户，返回所有，否则返回已经被分配到用户的游戏列表。
-// db.games.all_games(1, 20, 0, (err, games) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(games);
-// });
-
-// 添加一个游戏
-// 1. userid
-// 2. gnickname
-// 3. content
-// 4. 淘宝订单号
-// db.games.addGame(1, "游戏昵称4", "游戏信息4", "tbdd4", (err) => {
-//   if (err) { console.log(err.error); return; }
-//   console.log('======== added game.');
-// });
-
-// 查询所有游戏
-// 1. pageIndex
-// 2. pageCount
-// 3. userid
-// db.games.all_games(1, 20, 1, (err, games) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(games);
-// });
-
-// 修改游戏
-// 1. id
-// 2. userid
-// 3. gnickname
-// 4. content
-// 5. 淘宝订单号
-// db.games.updateGame(4, 2, "游戏昵称5", "游戏信息5", "tbdd5", (err) => {
-//   if (err) { console.log(err.error); return; }
-//   console.log('======== updated game.');
-// });
-
-// 删除游戏
-// 1. id
-// db.games.delGame(1, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log("======== deleted game.");
-// });
-
-// 更新游戏状态
-// 1. id
-// 2. status, 见需求文档
-// db.games.updateGameStatus(3, 2, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log("======== updated game status.");
-// });
-//
-// db.games.all_games(1, 20, 3, (err, games) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(games);
-// });
-
-// 添加游戏任务
-// 1. gameid
-// 2. 任务标题
-// 3. 任务内容
-// db.games.addtask(3, "tasktitle", "taskcontent", (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log("======= task added");
-// });
-
-// 获取任务
-// 1. gameid
-// 由于任务数记录条数不会很多，基本不用分页
-// db.games.gettasks(3, (err, tasks) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(tasks);
-// });
-
-// 更新任务
-// 1. 任务id
-// 2. 任务标题
-// 3. 任务内容
-// db.games.updatetask(1, "title", "content", (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('========= updated task');
-// });
-
-// 更新任务状态
-// 1. 任务id
-// 2. 新状态，见需求文档
-// db.games.changeTaskStatus(1, 1, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('========= changeTaskStatus ok');
-// });
-//
-// db.games.gettasks(3, (err, tasks) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(tasks);
-// });
-
-// 删除任务
-// 1.任务id
-// db.games.deltask(1, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('==== deleted task');
-// });
-// db.games.gettasks(3, (err, tasks) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(tasks);
-// });
-//
-// db.games.addtask(3, "tasktitle", "taskcontent", (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log("======= task added");
-// });
-// 进度
-// 1. taskid
-// 2. content
-// db.games.addprogress(1, "progress content", (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log("======= progress added");
-// });
-// 获取进度
-// 1. 任务id
-// db.games.getprogresss(1, (err, progresses) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(progresses);
-// });
-
-// 更新进度
-// 1. 进度id
-// 2. 进度内容
-// db.games.updateprogresss(1, "content", (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('========= updated progress');
-// });
-//
-// db.games.getprogresss(1, (err, progresses) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(progresses);
-// });
-
-// 删除进度
-// 1. 进度id
-// db.games.delprogress(1, (err) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log('==== deleted progress');
-// });
-//
-// db.games.getprogresss(1, (err, progresses) => {
-//   if (err) { console.log(err.error); return; };
-//   console.log(progresses);
-// });
