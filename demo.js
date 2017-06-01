@@ -97,7 +97,10 @@ db.users.all_users(1, 10, 0, (err, users) => {
 });
 
 // 查询所有游戏
-db.games.all_games(1, 20, 1, (err, games) => {
+// 1.pageIndex
+// 2.pageCount
+// 3.userid, 为0时不限制用户，返回所有，否则返回已经被分配到用户的游戏列表。
+db.games.all_games(1, 20, 0, (err, games) => {
   if (err) { console.log(err.error); return; };
   console.log(games);
 });
