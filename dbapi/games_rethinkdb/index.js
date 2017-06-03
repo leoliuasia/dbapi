@@ -275,7 +275,7 @@ exports.all_games = (pageIndex, pageCount, userid, callback) => {
     else {
       if (count == 0) {
         // 未找到记录
-        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount});
+        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount, games:[]});
       } else {
         // 基于指定的查询获取分页数据
         var sliceStart = (pageIndex - 1) * pageCount;

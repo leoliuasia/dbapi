@@ -34,7 +34,7 @@ exports.getlogs = (pageIndex, pageCount, userid, callback) => {
     if (err) callback(err.msg);
     else {
       if (count == 0) {
-        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount});
+        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount, logs:[]});
       } else {
         var sliceStart = (pageIndex - 1) * pageCount;
         q = q.slice(sliceStart, sliceStart + pageCount);
