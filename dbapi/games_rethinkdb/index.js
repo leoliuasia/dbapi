@@ -184,12 +184,11 @@ exports.deltask = (id, callback) => {
   r.table("tasks").get(id).delete().run(rdb.conn, (err, result) => {
     if (err) callback(err.msg);
     else {
+      // 删除进度
+      r.table("progresses").filter({taskid: id}).delete().run(rdb.conn);
       callback(null);
     }
   });
-
-  //TODO: 删除进度
-
 };
 
 exports.updateGame = (id, userid, gnickname, content, tbdd, callback) => {
@@ -233,8 +232,21 @@ exports.delGame = (id, callback) => {
     }
   });
 
-  // TODO:删除所有任务
+  // 删除所有任务
+  r.table("tasks").filter({gid: id}).run(rdb.conn, (err, cursor)=>{
+    if (!err) {
+      cursor.toArray((err, result)=>{
+        if (!err && result.length > 0) {
+          // 删除进度
+          result.forEach((task)=>{
+            r.table("progresses").filter({taskid: task.id}).delete().run(rdb.conn);
+          });
+        }
+      });
+    }
+  });
 
+  r.table("tasks").filter({gid: id}).delete().run(rdb.conn);
 };
 
 exports.updateGameStatus = (id, status, callback) => {

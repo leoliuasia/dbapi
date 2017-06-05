@@ -121,7 +121,7 @@ setTimeout(()=> {
   // 2. gnickname
   // 3. content
   // 4. 淘宝订单号
-  // db.games.addGame('70c46afc-88de-40de-b11c-f87bd72398e9', "游戏昵称6", "游戏信息6", "tbdd6", (err) => {
+  // db.games.addGame('d2007270-30e7-4471-af99-a910303f9047', "游戏昵称6", "游戏信息6", "tbdd6", (err) => {
   //   if (err) { console.log(err); return; }
   //   console.log('======== added game.');
   // });
@@ -148,7 +148,7 @@ setTimeout(()=> {
 
   // 删除游戏
   // 1. id
-  // db.games.delGame('481cc2f6-37d0-44bc-94ef-76786b040f13', (err) => {
+  // db.games.delGame('dc5e9213-08b6-4841-a4b7-d8b4de0a1b84', (err) => {
   //   if (err) { console.log(err); return; };
   //   console.log("======== deleted game.");
   // });
@@ -165,7 +165,7 @@ setTimeout(()=> {
   // 1. gameid
   // 2. 任务标题
   // 3. 任务内容
-  // db.games.addtask('499bcb63-d54a-4e25-bb47-2708b94ea7ef', "3333333333", "333333333333333333", (err) => {
+  // db.games.addtask('dc5e9213-08b6-4841-a4b7-d8b4de0a1b84', "task2", "task2", (err) => {
   //   if (err) { console.log(err); return; };
   //   console.log("======= task added");
   // });
@@ -197,7 +197,7 @@ setTimeout(()=> {
 
   // 删除任务
   // 1.任务id
-  // db.games.deltask('c00adefe-249f-422f-a6c4-95a644985560', (err) => {
+  // db.games.deltask('c368e478-023f-4ac3-95b1-0682b0f7c5e5', (err) => {
   //   if (err) { console.log(err); return; };
   //   console.log('==== deleted task');
   // });
@@ -205,7 +205,7 @@ setTimeout(()=> {
   // 添加进度
   // 1. taskid
   // 2. content
-  // db.games.addprogress('14933ec2-4e5d-43a7-b253-ea71bae4fb1f', "progress content 2", (err) => {
+  // db.games.addprogress('f3411e50-cb68-4937-a8e9-db8bd07774ec', "progress content 1", (err) => {
   //   if (err) { console.log(err); return; };
   //   console.log("======= progress added");
   // });
