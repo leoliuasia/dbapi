@@ -62,7 +62,7 @@ setTimeout(()=> {
   //   console.log("========= log added");
   // });
   //
-  // db.logs.addlog(2, 2, "log 2", "122.21.23.11", (err) => {
+  // db.logs.addlog(2, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', "log 2", "122.21.23.11", (err) => {
   //   if (err) { console.log(err); return; };
   //
   //   console.log("========= log added");
@@ -71,8 +71,8 @@ setTimeout(()=> {
   // 获取日志
   // 1. 页号
   // 2. 每页数量
-  // 3. 哪个用户的日志，0表示所有，其它表示按用户id过滤
-  // db.logs.getlogs(1, 10, 0, (err, logs) => {
+  // 3. 哪个用户的日志，null或者''表示所有，其它表示按用户id过滤
+  // db.logs.getlogs(1, 10, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', (err, logs) => {
   //  if (err) { console.log(err); return; };
   //
   //   console.log(logs);
@@ -121,9 +121,9 @@ setTimeout(()=> {
   // 2. gnickname
   // 3. content
   // 4. 淘宝订单号
-  // db.games.addGame('d2007270-30e7-4471-af99-a910303f9047', "游戏昵称6", "游戏信息6", "tbdd6", (err) => {
+  // db.games.addGame('d2007270-30e7-4471-af99-a910303f9047', "游戏昵称6", "游戏信息6", "tbdd6", (err, game) => {
   //   if (err) { console.log(err); return; }
-  //   console.log('======== added game.');
+  //   console.log('======== added game.', game);
   // });
 
   // 查询所有游戏

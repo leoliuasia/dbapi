@@ -8,17 +8,21 @@ exports.addGame = (userid, gnickname, content, tbdd, callback) => {
     return;
   }
 
-  r.table('games').insert({
+  var game = {
     userid: userid,
     gnickname: gnickname,
     content: content,
     tbdd: tbdd,
     addtime: new Date().toLocaleString(),
     status: 0
-  }).run(rdb.conn, (err, result) => {
+  }
+
+  r.table('games').insert(game).run(rdb.conn, (err, result) => {
+    console.log(result);
     if (err) callback(err.msg);
     else {
-      callback(null);
+      game.id = result.generated_keys[0];
+      callback(null, game);
     }
   });
 };
