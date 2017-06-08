@@ -121,7 +121,8 @@ setTimeout(()=> {
   // 2. gnickname
   // 3. content
   // 4. 淘宝订单号
-  // db.games.addGame('d2007270-30e7-4471-af99-a910303f9047', "游戏昵称6", "游戏信息6", "tbdd6", (err, game) => {
+  // 5. 分配者用户id
+  // db.games.addGame('d2007270-30e7-4471-af99-a910303f9047', "游戏昵称6", "游戏信息6", "tbdd6", 'd2007270-30e7-4471-af99-a910303f9047', (err, game) => {
   //   if (err) { console.log(err); return; }
   //   console.log('======== added game.', game);
   // });
@@ -141,7 +142,8 @@ setTimeout(()=> {
   // 3. gnickname
   // 4. content
   // 5. 淘宝订单号
-  // db.games.updateGame('481cc2f6-37d0-44bc-94ef-76786b040f13', '70c46afc-88de-40de-b11c-f87bd72398e9', "gnickname76786b040f13", "content76786b040f13", "tbdd76786b040f13", (err) => {
+  // 6. 分配者用户id，为null或者''时，表示不更改，否则将更改为新指定的分配者。
+  // db.games.updateGame('481cc2f6-37d0-44bc-94ef-76786b040f13', '70c46afc-88de-40de-b11c-f87bd72398e9', "gnickname76786b040f13", "content76786b040f13", "tbdd76786b040f13", 'd2007270-30e7-4471-af99-a910303f9047', (err) => {
   //   if (err) { console.log(err); return; }
   //   console.log('======== updated game.');
   // });

@@ -1,7 +1,7 @@
 var rdb = require('../rdb');
 var r = rdb.r;
 
-exports.addGame = (userid, gnickname, content, tbdd, callback) => {
+exports.addGame = (userid, gnickname, content, tbdd, assignerid, callback) => {
 
   if (rdb.conn == null) {
     callback("rdb.conn is null");
@@ -14,8 +14,9 @@ exports.addGame = (userid, gnickname, content, tbdd, callback) => {
     content: content,
     tbdd: tbdd,
     addtime: new Date().toLocaleString(),
-    status: 0
-  }
+    status: 0,
+    assignerid: assignerid
+  };
 
   r.table('games').insert(game).run(rdb.conn, (err, result) => {
     console.log(result);
@@ -195,7 +196,7 @@ exports.deltask = (id, callback) => {
   });
 };
 
-exports.updateGame = (id, userid, gnickname, content, tbdd, callback) => {
+exports.updateGame = (id, userid, gnickname, content, tbdd, assignerid, callback) => {
 
   if (rdb.conn == null) {
     callback("rdb.conn is null");
@@ -209,6 +210,7 @@ exports.updateGame = (id, userid, gnickname, content, tbdd, callback) => {
   };
 
   if (userid != null && userid != '') newvalue.userid = userid;
+  if (assignerid != null && assignerid != '') newvalue.assignerid = assignerid;
 
   r.table('games').get(id).update(newvalue).run(rdb.conn, (err, result)=>{
     if (err) callback(err.msg);
