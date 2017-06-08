@@ -136,6 +136,15 @@ setTimeout(()=> {
   //   console.log(games);
   // });
 
+  // 查询是谁分配的所有游戏
+  // 1.pageIndex
+  // 2.pageCount
+  // 3.agsignerid
+  // db.games.all_games_with_assigner(1, 20, '70c46afc-88de-40de-b11c-f87bd72398e9', (err, games) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(games);
+  // });
+
   // 修改游戏
   // 1. id
   // 2. userid,为null或者''时，表示不更改分配的用户。否则将更改分配到的用户。

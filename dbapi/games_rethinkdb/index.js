@@ -274,6 +274,54 @@ exports.updateGameStatus = (id, status, callback) => {
   });
 };
 
+exports.all_games_with_assigner = (pageIndex, pageCount, assignerid, callback) => {
+
+  if (rdb.conn == null) {
+    callback("rdb.conn is null");
+    return;
+  }
+
+  var q = r.table('games');
+  q = q.filter({assignerid: assignerid});
+  q = q.eqJoin('userid', r.table('users'));
+  q = q.without({right: ["id",'pwd','lastip','lasttime','role','status','regtime']});
+  q = q.zip();
+
+  var qcount = q.count(); // 指定了查询条件后，统计该查询的结果总数。
+  qcount.run(rdb.conn, (err, count) => {
+    if (err) callback(err.msg);
+    else {
+      if (count == 0) {
+        // 未找到记录
+        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount, games:[]});
+      } else {
+        // 基于指定的查询获取分页数据
+        var sliceStart = (pageIndex - 1) * pageCount;
+        q = q.slice(sliceStart, sliceStart + pageCount); // 从源头指定需要的数据区间，而不是返回大集合体后获取子区间，提高查询性能。
+        q.run(rdb.conn, (err, cursor)=>{
+          if (err) callback(err.msg);
+          else {
+            cursor.toArray(function(err, result) {
+              if (err) callback(err.msg);
+              else {
+                var data = {
+                  total: count,
+                  pageIndex: pageIndex,
+                  pageCount: pageCount
+                };
+
+                data.games = result;
+                callback(null, data);
+              }
+            });
+          }
+        });
+      }
+    }
+  });
+
+};
+
 exports.all_games = (pageIndex, pageCount, userid, callback) => {
 
   if (rdb.conn == null) {
