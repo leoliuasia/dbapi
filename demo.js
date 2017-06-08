@@ -62,7 +62,7 @@ setTimeout(()=> {
   //   console.log("========= log added");
   // });
   //
-  // db.logs.addlog(2, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', "log 2", "122.21.23.11", (err) => {
+  // db.logs.addlog(2, 'd2007270-30e7-4471-af99-a910303f9047', "log 2", "122.21.23.11", (err) => {
   //   if (err) { console.log(err); return; };
   //
   //   console.log("========= log added");
@@ -72,7 +72,7 @@ setTimeout(()=> {
   // 1. 页号
   // 2. 每页数量
   // 3. 哪个用户的日志，null或者''表示所有，其它表示按用户id过滤
-  // db.logs.getlogs(1, 10, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', (err, logs) => {
+  // db.logs.getlogs(1, 10, 'd2007270-30e7-4471-af99-a910303f9047', (err, logs) => {
   //  if (err) { console.log(err); return; };
   //
   //   console.log(logs);
