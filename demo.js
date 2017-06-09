@@ -140,10 +140,10 @@ setTimeout(()=> {
   // 1.pageIndex
   // 2.pageCount
   // 3.agsignerid
-  db.games.all_games_with_assigner(1, 20, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', (err, games) => {
-    if (err) { console.log(err); return; };
-    console.log(games);
-  });
+  // db.games.all_games_with_assigner(1, 20, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', (err, games) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(games);
+  // });
 
   // 修改游戏
   // 1. id

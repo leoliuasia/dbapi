@@ -317,7 +317,7 @@ exports.all_games_with_assigner = (pageIndex, pageCount, assignerid, callback) =
                 data.games.forEach((game)=>{
                   ps.push(r.table('users').get(game.userid).run(rdb.conn)
                     .then((u)=>{game.usname = u.usname;
-                        game.nickname = u.nickname;}));
+                        game.nickname = u.nickname;}).catch((err)=>{}));
 
                   ps.push(r.table('users').get(game.assignerid).run(rdb.conn)
                     .then((u)=>{game.assignerusname = u.usname;
@@ -377,10 +377,12 @@ exports.all_games = (pageIndex, pageCount, userid, callback) => {
                 data.games.forEach((game)=>{
                   ps.push(r.table('users').get(game.userid).run(rdb.conn)
                     .then((u)=>{game.usname = u.usname;
-                        game.nickname = u.nickname;}));
+                        game.nickname = u.nickname;})
+                    .catch((err)=>{}));
 
                   ps.push(r.table('users').get(game.assignerid).run(rdb.conn)
-                    .then((u)=>{game.assignerusname = u.usname;
+                    .then((u)=>{
+                      game.assignerusname = u.usname;
                         game.assignernickname = u.nickname;})
                     .catch((err)=>{}));
                 });
