@@ -24,10 +24,10 @@ r.connect({db: rconf.db, host: rconf.host, port: rconf.port}, (err, conn) => {
         var tables = ['logs', 'users', 'games', 'tasks', 'progresses'];
         var indexes = {
           'logs': ['userid', 'addtime'],
-          'users': ['role', 'usname'],
+          'users': ['role', 'usname', 'regtime'],
           'games': ['userid', 'addtime'],
-          'tasks': ['gid'],
-          'progresses': ['taskid']
+          'tasks': ['gid', 'addtime'],
+          'progresses': ['taskid', 'addtime']
         }
         tables.forEach((table)=> {
           if (result.indexOf(table) == -1) {

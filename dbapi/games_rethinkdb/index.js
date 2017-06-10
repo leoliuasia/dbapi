@@ -34,16 +34,19 @@ exports.addtask = (gameid, tasktitle, taskcontent, callback) => {
     return;
   }
 
-  r.table('tasks').insert({
+  var task = {
     gid: gameid,
     title: tasktitle,
     content: taskcontent,
     addtime: new Date().toLocaleString(),
     status: 0
-  }).run(rdb.conn, (err, result)=>{
+  }
+
+  r.table('tasks').insert(task).run(rdb.conn, (err, result)=>{
     if (err) callback(err.msg);
     else {
-      callback(null);
+      task.id = result.generated_keys[0];
+      callback(null, task);
     }
   });
 };
@@ -56,14 +59,17 @@ exports.addprogress = (taskid, content, callback) => {
     return;
   }
 
-  r.table('progresses').insert({
+  var progresses = {
     taskid: taskid,
     content: content,
     addtime: new Date().toLocaleString()
-  }).run(rdb.conn, (err, result)=>{
+  };
+
+  r.table('progresses').insert().run(rdb.conn, (err, result)=>{
     if (err) callback(err.msg);
     else {
-      callback(null);
+      progresses.id = result.generated_keys[0];
+      callback(null, progresses);
     }
   });
 };
@@ -74,7 +80,8 @@ exports.getprogresss = (taskid, callback) => {
     return;
   }
 
-  r.table('progresses').filter({taskid: taskid}).run(rdb.conn, (err, cursor)=>{
+  r.table('progresses').orderBy({index: r.desc('addtime')})
+    .filter({taskid: taskid}).run(rdb.conn, (err, cursor)=>{
     if (err) callback(err.msg);
     else {
       cursor.toArray(function(err, result) {
@@ -93,7 +100,8 @@ exports.gettasks = (gameid, callback) => {
     return;
   }
 
-  r.table('tasks').filter({gid: gameid}).run(rdb.conn, (err, cursor)=>{
+  r.table('tasks').orderBy({index: r.desc('addtime')})
+    .filter({gid: gameid}).run(rdb.conn, (err, cursor)=>{
     if (err) callback(err.msg);
     else {
       cursor.toArray(function(err, result) {

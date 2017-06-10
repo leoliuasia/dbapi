@@ -69,7 +69,7 @@ exports.all_users = (pageIndex, pageCount, role, callback) => {
     return;
   }
 
-  var q = r.table('users');
+  var q = r.table('users').orderBy({index: r.desc('regtime')});
   if (role > 0) q = q.filter({role: role}); // 按role来查找，为0时表示所有，否则按指定的用户角色。
 
   var qcount = q.count(); // 指定了查询条件后，统计该查询的结果总数。

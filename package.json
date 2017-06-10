@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rethinkdb": "^2.3.3"
+    "rethinkdb": "^2.3.3",
+    "socket.io": "^2.0.2"
+  },
+  "devDependencies": {
+    "express": "^4.15.3"
   }
 }
