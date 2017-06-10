@@ -22,6 +22,16 @@ exports.configSio = (http)=>{
 
     socket.on('disconnect', ()=>{
       console.log('user disconnected');
+
+      var cu = connected_users.filter((u)=>{
+        return u.s === socket;
+      });
+
+      if (cu && cu.length > 0) {
+        connected_users.splice(connected_users.indexOf(cu[0]), 1);
+        console.log(connected_users);
+      }
+
     });
   });
 
