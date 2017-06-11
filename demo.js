@@ -153,7 +153,9 @@ setTimeout(()=> {
   // 1.pageIndex
   // 2.pageCount
   // 3.userid, 为''或null时不限制用户，返回所有，否则返回已经被分配到用户的游戏列表。
-  // db.games.all_games(1, 20, 'cb5c2c5c-2669-4a36-b8be-fe25ba59b859', (err, games) => {
+  // 4.status, 将status加进查询条件，为null时不使用此条件。
+  // 5.assignerid, 将 assignerid加进查询条件，为null不使用此条件。
+  // db.games.all_games(1, 20, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', 1, null, (err, games) => {
   //   if (err) { console.log(err); return; };
   //   console.log(games);
   // });
@@ -167,16 +169,14 @@ setTimeout(()=> {
   //   console.log(games);
   // });
 
-
-
   // 按任务状态来查询游戏
   // 1.pageIndex
   // 2.pageCount
   // 3.status 按任务来查询游戏
-  db.games.all_games_with_status(1, 20, 0, (err, games) => {
-    if (err) { console.log(err); return; };
-    console.log(games);
-  });
+  // db.games.all_games_with_status(1, 20, 0, (err, games) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log(games);
+  // });
 
 
   // 修改游戏

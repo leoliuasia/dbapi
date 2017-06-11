@@ -345,16 +345,22 @@ exports.all_games_with_assigner = (pageIndex, pageCount, assignerid, callback) =
 
 };
 
-exports.all_games = (pageIndex, pageCount, userid, callback) => {
+exports.all_games = (pageIndex, pageCount, userid, status, assignerid, callback) => {
 
   if (rdb.conn == null) {
     callback("rdb.conn is null");
     return;
   }
 
+  var filter = {};
+  if (userid != null) filter.userid = userid;
+  if (status != null) filter.status = status;
+  if (assignerid != null) filter.assignerid = assignerid;
+
   var q = r.table('games');
   q = q.orderBy({index: r.desc("addtime")});
-  if (userid != null && userid != '') q = q.filter({userid: userid});
+  q = q.filter(filter);
+
   //q = q.eqJoin('userid', r.table('users'));
   //q = q.without({right: ["id",'pwd','lastip','lasttime','role','status','regtime']});
   //q = q.zip();
