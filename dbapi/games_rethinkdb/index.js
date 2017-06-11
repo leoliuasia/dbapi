@@ -59,17 +59,17 @@ exports.addprogress = (taskid, content, callback) => {
     return;
   }
 
-  var progresses = {
+  var progress = {
     taskid: taskid,
     content: content,
     addtime: new Date()
   };
 
-  r.table('progresses').insert().run(rdb.conn, (err, result)=>{
+  r.table('progresses').insert(progress).run(rdb.conn, (err, result)=>{
     if (err) callback(err.msg);
     else {
-      progresses.id = result.generated_keys[0];
-      callback(null, progresses);
+      progress.id = result.generated_keys[0];
+      callback(null, progress);
     }
   });
 };
