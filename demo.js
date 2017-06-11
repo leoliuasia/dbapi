@@ -2,30 +2,30 @@
 // dbapi/config/index.js文件中指定rethinkdb的地址和端口.
 
 var db = require('./dbapi'); // 后台数据库相关api
-var app = require('express')();
-var http = require('http').Server(app);
+// var app = require('express')();
+// var http = require('http').Server(app);
 
 // 要启用socket.io，后端按照A1，A2，A3三个步骤。前端按index.html文件的script实现。
 
 // A1. 添加引用
-var sio = require('./sio');
+// var sio = require('./sio');
 
-app.get('/', (req, res)=>{
-  res.sendFile(__dirname + '/index.html');
-});
+// app.get('/', (req, res)=>{
+//   res.sendFile(__dirname + '/index.html');
+// });
 
-http.listen(3000, ()=>{
-  console.log('listening on *:3000');
-});
+// http.listen(3000, ()=>{
+//   console.log('listening on *:3000');
+// });
 
 db.useRethinkDb(); // 默认内存数据库，使用这个切换成实际部署数据库。
 
 setTimeout(()=> {
 
   // A2. 将socket.io绑定到http上。
-  sio.configSio(http);
+  //sio.configSio(http);
   // A3. 开始监听消息，目前只示范实现了一个游戏添加的消息。前端代码具体参考index.html中的script。
-  sio.watch();
+  //sio.watch();
 
   // 添加管理员
   // 1： 用户登录名，2：昵称，3：密码（经过md5运算），4：回调，err如果成功为null，否则表示失败。属性error表示错误描述。
@@ -97,6 +97,7 @@ setTimeout(()=> {
   //  if (err) { console.log(err); return; };
   //
   //   console.log(logs);
+  //   console.log(logs.logs[0].addtime.toLocaleString());
   // });
 
   // 修改用户

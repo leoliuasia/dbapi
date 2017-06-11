@@ -13,7 +13,7 @@ exports.addGame = (userid, gnickname, content, tbdd, assignerid, callback) => {
     gnickname: gnickname,
     content: content,
     tbdd: tbdd,
-    addtime: new Date().toLocaleString(),
+    addtime: new Date(),
     status: 0,
     assignerid: assignerid
   };
@@ -38,7 +38,7 @@ exports.addtask = (gameid, tasktitle, taskcontent, callback) => {
     gid: gameid,
     title: tasktitle,
     content: taskcontent,
-    addtime: new Date().toLocaleString(),
+    addtime: new Date(),
     status: 0
   }
 
@@ -62,7 +62,7 @@ exports.addprogress = (taskid, content, callback) => {
   var progresses = {
     taskid: taskid,
     content: content,
-    addtime: new Date().toLocaleString()
+    addtime: new Date()
   };
 
   r.table('progresses').insert().run(rdb.conn, (err, result)=>{

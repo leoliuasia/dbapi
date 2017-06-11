@@ -128,7 +128,7 @@ function addUser(user, callback)
   }
 
   var d = new Date();
-  user.regtime = d.toLocaleString();
+  user.regtime = d;
   user.lasttime = "";
   user.lastip = "";
   user.status = 0;
@@ -275,7 +275,7 @@ exports.updateUserLastTime = (id, callback) => {
     return;
   }
 
-  var newvalue = {lasttime: new Date().toLocaleString()};
+  var newvalue = {lasttime: new Date()};
 
   r.table("users").get(id).update(newvalue).run(rdb.conn, (err, result) => {
     if (err) callback(err.msg);
