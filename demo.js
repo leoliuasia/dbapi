@@ -144,7 +144,7 @@ setTimeout(()=> {
   // 3. content
   // 4. 淘宝订单号
   // 5. 分配者用户id
-  // db.games.addGame('1732152d-a7f7-43cd-9ee0-83e9105cb44d', "游戏昵称6", "游戏信息6", "tbdd6", '1732152d-a7f7-43cd-9ee0-83e9105cb44d', (err, game) => {
+  // db.games.addGame('', "游戏昵称6", "游戏信息6", "tbdd6", '1732152d-a7f7-43cd-9ee0-83e9105cb44d', (err, game) => {
   //   if (err) { console.log(err); return; }
   //   console.log('======== added game.', game);
   // });
@@ -155,7 +155,7 @@ setTimeout(()=> {
   // 3.userid, 为''或null时不限制用户，返回所有，否则返回已经被分配到用户的游戏列表。
   // 4.status, 将status加进查询条件，为null时不使用此条件。
   // 5.assignerid, 将 assignerid加进查询条件，为null不使用此条件。
-  // db.games.all_games(1, 20, '1732152d-a7f7-43cd-9ee0-83e9105cb44d', 1, null, (err, games) => {
+  // db.games.all_games(1, 20, '', null, null, (err, games) => {
   //   if (err) { console.log(err); return; };
   //   console.log(games);
   // });
@@ -210,10 +210,10 @@ setTimeout(()=> {
   // 1. gameid
   // 2. 任务标题
   // 3. 任务内容
-  db.games.addtask('b3d09403-77f5-4ae1-b4e3-b52472b6f540', "task2", "task2", (err, task) => {
-    if (err) { console.log(err); return; };
-    console.log("======= task added", task);
-  });
+  // db.games.addtask('b3d09403-77f5-4ae1-b4e3-b52472b6f540', "task2", "task2", (err, task) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log("======= task added", task);
+  // });
 
   // 获取任务
   // 1. gameid
@@ -250,10 +250,10 @@ setTimeout(()=> {
   // 添加进度
   // 1. taskid
   // 2. content
-  db.games.addprogress('c36f1e36-75ed-4940-bbf9-1c3adf0dd441', "progress content 1", (err, progress) => {
-    if (err) { console.log(err); return; };
-    console.log("======= progress added", progress);
-  });
+  // db.games.addprogress('c36f1e36-75ed-4940-bbf9-1c3adf0dd441', "progress content 1", (err, progress) => {
+  //   if (err) { console.log(err); return; };
+  //   console.log("======= progress added", progress);
+  // });
 
   // 获取进度
   // 1. 任务id
