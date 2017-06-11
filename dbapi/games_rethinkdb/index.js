@@ -406,3 +406,71 @@ exports.all_games = (pageIndex, pageCount, userid, callback) => {
     }
   });
 };
+
+
+exports.all_games_with_status = (pageIndex, pageCount, status, callback) => {
+
+  if (rdb.conn == null) {
+    callback("rdb.conn is null");
+    return;
+  }
+
+  if (status == null) {
+    callback("status is null");
+    return;
+  }
+
+  var q = r.table('games');
+  q = q.orderBy({index: r.desc("addtime")});
+  q = q.filter({status: status});
+  //q = q.eqJoin('userid', r.table('users'));
+  //q = q.without({right: ["id",'pwd','lastip','lasttime','role','status','regtime']});
+  //q = q.zip();
+
+  var qcount = q.count(); // 指定了查询条件后，统计该查询的结果总数。
+  qcount.run(rdb.conn, (err, count) => {
+    if (err) callback(err.msg);
+    else {
+      if (count == 0) {
+        // 未找到记录
+        callback(null, {total: 0, pageIndex: pageIndex, pageCount: pageCount, games:[]});
+      } else {
+        // 基于指定的查询获取分页数据
+        var sliceStart = (pageIndex - 1) * pageCount;
+        q = q.slice(sliceStart, sliceStart + pageCount); // 从源头指定需要的数据区间，而不是返回大集合体后获取子区间，提高查询性能。
+        q.run(rdb.conn, (err, cursor)=>{
+          if (err) callback(err.msg);
+          else {
+            cursor.toArray(function(err, result) {
+              if (err) callback(err.msg);
+              else {
+                var data = {
+                  total: count,
+                  pageIndex: pageIndex,
+                  pageCount: pageCount
+                };
+
+                data.games = result;
+                var ps = [];
+                data.games.forEach((game)=>{
+                  ps.push(r.table('users').get(game.userid).run(rdb.conn)
+                    .then((u)=>{game.usname = u.usname;
+                        game.nickname = u.nickname;})
+                    .catch((err)=>{}));
+
+                  ps.push(r.table('users').get(game.assignerid).run(rdb.conn)
+                    .then((u)=>{
+                      game.assignerusname = u.usname;
+                        game.assignernickname = u.nickname;})
+                    .catch((err)=>{}));
+                });
+
+                Promise.all(ps).then(()=>{callback(null, data);}, (err)=>{callback(err);});
+              }
+            });
+          }
+        });
+      }
+    }
+  });
+};

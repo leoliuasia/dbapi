@@ -167,6 +167,18 @@ setTimeout(()=> {
   //   console.log(games);
   // });
 
+
+
+  // 按任务状态来查询游戏
+  // 1.pageIndex
+  // 2.pageCount
+  // 3.status 按任务来查询游戏
+  db.games.all_games_with_status(1, 20, 0, (err, games) => {
+    if (err) { console.log(err); return; };
+    console.log(games);
+  });
+
+
   // 修改游戏
   // 1. id
   // 2. userid,为null或者''时，表示不更改分配的用户。否则将更改分配到的用户。
